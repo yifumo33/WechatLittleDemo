@@ -6,7 +6,7 @@ app.$mount()
 
 export default{
 	config:{
-		navigationBarTitleText:'评论与搜索',
+		navigationBarTitleText:'搜索',
 		enablePullDownRefresh:true
 	}
 

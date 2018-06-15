@@ -8,7 +8,7 @@ const {mysql} = require('../qcloud')
 
 module.exports = async(ctx) =>{
 	const isbn = ctx.request.body.isbn
-	console.log("isbn的值是",isbn)
+	console.log("isbn的z")
 	const openId = ctx.request.body.openId
 	if(isbn && openId){
 		const findRes = await mysql('books').select().where('isbn',isbn)

@@ -91,9 +91,10 @@
 		.info{
 			color:white;
 			position: absolute;
+			margin-bottom:40rpx; 
 			width:100%;
 			left:0;
-			top:400rpx;
+			top:360rpx;
 			text-align:center;
 			.title{
 				font-size:20px;

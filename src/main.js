@@ -8,7 +8,7 @@ app.$mount()
 
 export default{
 	config:{
-			pages:['^pages/books/main'],
+			pages:['^pages/me/main'],
 		  "window":{
 		    "backgroundTextStyle":"light",
 		    "navigationBarBackgroundColor": "#6b7179",
@@ -26,7 +26,7 @@ export default{
 		  			selectedIconPath:'static/img/bookOpen.png'
 		  		},
 		  		{
-		  			text:'评论与搜索',
+		  			text:'搜索',
 		  			pagePath:'pages/comments/main',
 		  			iconPath:'static/img/commentsNoactive.png',
 		  			selectedIconPath:'static/img/commentsActive.png'

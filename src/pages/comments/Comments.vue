@@ -1,20 +1,12 @@
 <template>
 	<div class="container">
-		
-		
-		<h1 style="padding:10px">我发出的评论</h1>
-		<ul class="comments-list"  v-if="userinfo.openId">
-				<li   class="comment-item"   :key=index  v-for="(item,index) in comments" @click="handleClick(item.bookid)">
-					{{item.comment}}
-				</li>
-		</ul>	
-		<div style="width:100%;height:1px;margin-top:50rpx;background:#6b7179"></div>
 		<div class="search" style="margin-top:50rpx">
-			<input type="text" v-model="Keyword" placeholder="输入你想要查找的图书">
+			<input  class="inputStyle" type="text" v-model="Keyword" placeholder="输入你想要查找的图书">
 		</div>
 
 		<button @click="searchBook" >搜索图书</button>
-			<div class="page-title" style="padding:10px" v-if="searchlistshow">搜索结果</div>
+		<p class="hint" v-if="hintShow">搜索中...</p>
+			<div class="page-title" style="padding:10px" v-if="searchlistshow">{{searchResult}}</div>
 			<div class="bookItem" v-for="book in searchBooks" :key="book.id" v-if="searchlistshow">
 					<div class="imformation">
 						<div class="left">
@@ -34,12 +26,12 @@
 					<button @click="addBook(book.isbn)"> 添加到我的图书</button>
 			</div>
 		
-		<div v-if="!books.length">暂时还没添加过书，快去添加几本吧</div>	
+			
 	</div>
 </template>
 
 <script> 
-	import Cardsecond from "@/components/Cardsecond"
+	// import Cardsecond from "@/components/Cardsecond"
 	import {get,post,showModal} from '@/util'
 	export default{
 		data(){
@@ -52,31 +44,33 @@
 				comments:[],
 				books:[],
 				searchBooks:[],
-				searchlistshow:false
+				searchlistshow:false,
+				hintShow:false,
+				searchResult:'搜查结果'
 			}
 		},
 		methods:{
 			init(){
-				wx.showNavigationBarLoading()
-				this.getComments()
-				console.log(1123)
-				wx.hideNavigationBarLoading()
-				this.getBooks()
+				// wx.showNavigationBarLoading()
+				// // this.getComments()
+				// console.log(1123)
+				// wx.hideNavigationBarLoading()
+				// this.getBooks()
 			},
-			async getBooks(){
-				const books = await get('/weapp/booklist',{
-					openid:this.userinfo.openId
-				})
-				this.books = books.data.data.list
+			// async getBooks(){
+			// 	const books = await get('/weapp/booklist',{
+			// 		openid:this.userinfo.openId
+			// 	})
+			// 	this.books = books.data.data.list
 				
-			},
-			async getComments(){
-				const comments = await get('/weapp/commentlist',{
-					openid : this.userinfo.openId
-				}) 
-				this.comments = comments.data.data.list
+			// },
+			// async getComments(){
+			// 	const comments = await get('/weapp/commentlist',{
+			// 		openid : this.userinfo.openId
+			// 	}) 
+			// 	this.comments = comments.data.data.list
 				
-			},
+			// },
 			handleClick(bookid){
 				if(bookid){
 					wx.navigateTo({
@@ -86,6 +80,7 @@
 			},
 			async searchBook(){
 				var _this = this
+				this.hintShow = true
 				wx.request({
 					  url: 'http://t.yushu.im/v2/book/search', //仅为示例，并非真实的接口地址
 					  data:{
@@ -95,12 +90,17 @@
 					      'Content-Type': 'application/json' // 默认值
 					  },
 					  success: function(res) {
-					  	if(res.data.books){
+					  	if(res.data.count){
 						   	_this.searchBooks = res.data.books
  							console.log(_this.searchBooks)
  							_this.searchlistshow = true
+ 							_this.hintShow = false
+ 							_this.searchResult = '搜查结果'
 					  	}else{
 					  		console.log('没找到')
+					  		_this.hintShow = false
+ 							_this.searchlistshow = true
+ 							_this.searchResult = '没有找到你输入的图书名'
 					  	}
 					   
 					  }
@@ -109,7 +109,7 @@
 				async addBook(isbn){
 					this.isbn = isbn
 					if(!this.userinfo.openId){
-					showModal('请先登录')
+					showModal('图书添加失败','请先登录')
 						return
 					}
 					const res = await post('/weapp/addbook',{
@@ -134,10 +134,10 @@
 		        this.userinfo = userinfo
 		        this.init()
 		      }
-			},
-			components:{
-				Cardsecond
 			}
+			// components:{
+			// 	Cardsecond
+			// }
 			
 			
 	   }
@@ -150,9 +150,20 @@
 
 <style lang="scss" scoped>
 .container{
-	padding:0 20px;
+
+	.hint{
+		margin-top:20rpx;
+		text-align: center; 
+	}
+	padding:0 40rpx 40rpx 40rpx;
 	.search{
-		border:1px solid;
+		.inputStyle{
+			margin-bottom:40rpx;
+			padding:10rpx 20rpx;
+			font-size:14px;
+			border:1px solid #6b7179;
+			border-radius:6px;   
+		}
 	}
 	.comment-list{
 	padding:0 10px;
@@ -170,6 +181,7 @@
 		padding:0 10px;
 	}
 	.bookItem{
+
 		.imformation{
 		 margin:10px 0px;
 		 display:flex;

@@ -3,6 +3,7 @@
 		<div class="userInfo" @click="login">
 			<img :src="userInfo.avatarUrl" alt="">
 			<p v-if='nickNameShow'>{{userInfo.nickName}}</p>
+			<p class="hint" v-if="hintShow">登陆中</p>
 		</div>
 		<div class="progressBar">
 			<progress v-bind:percent='percent' color='#6b7179' ></progress> 
@@ -29,20 +30,25 @@
 				userInfo:{
 					avatarUrl:'../../../static/img/unlogin.png',
 					nickName:'点击登陆'
-				}
+				},
+				hintShow:false,
+				islogin:false
 			}
 		},
 		methods:{
 			async addBook(isbn){
-				console.log(isbn)
+				console.log('我是isbn码',isbn)
 				const res = await post('/weapp/addbook',{
 					isbn,
 					openId:this.userInfo.openId
 				})
 				console.log(res.data.data.title)
 				console.log(res)
-				if(res.data.code === 0 && res.data.data.title)
-				showModal('添加成功',`<<${res.data.data.title}>>添加成功`)
+				if(res.data.code === 0 && res.data.data.title){
+				showModal('添加成功',`<<${res.data.data.title}>>添加成功`)	
+				}else{
+					showModal('添加失败','找不到相关的图书')
+				}
 
 
 			},
@@ -61,17 +67,21 @@
 				showSuccess('获得授权成功')
 			},
 			login(){
-				console.log('haha')
+
+				
+				var _this = this
 				let user = wx.getStorageSync('userInfo')
 				var _this = this
 				this.userInfo = user
 				if(!user){
+						this.hintShow = true
 						qcloud.setLoginUrl(config.loginUrl);
 						qcloud.login({
 						    success: function (userInfo) {
 						        console.log('登录成功', userInfo);
 						        wx.setStorageSync('userInfo',userInfo)
 						        showSuccess('登陆成功')
+						        _this.hintShow = false
 						        _this.userInfo = userInfo
 						    },
 						    fail: function (err) {
@@ -85,6 +95,7 @@
 		created(){
 			let user = wx.getStorageSync('userInfo')
 			if(user){
+				this.islogin=true
 				this.getUserInfoShow = false
 				this.nickNameShow = true
 				this.userInfo = user

@@ -15,19 +15,19 @@
 			return{
 				books:[],
 				page:0,
-				more:true,
+			
 				tops:[]
 			}
 		},
 		methods:{
 			async getList(init){
 				if(init){
-					this.page = 0
-					this.more = true
+					this.page = 0		
 				}
 				wx.showNavigationBarLoading()
 				const books = await get('/weapp/booklist',{page:this.page})
 				const booksData = books.data.data.list
+				console.log(booksData)
 				if(this.page === 0){
 					if(booksData.length < 3 ){
 						this.books = booksData
