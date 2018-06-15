@@ -11,7 +11,8 @@
 ![可以在线查询豆瓣资料](https://upload-images.jianshu.io/upload_images/5670939-9ac4b2f5fa544853.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 ### 实现图书的详情资料查询以及评论录入。
 ![图书页面详情展示](https://upload-images.jianshu.io/upload_images/5670939-caa8c6207990c377.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-
+## 扫描二维码进入小程序（如果没成功请联系我更新）
+![小程序二维码](https://upload-images.jianshu.io/upload_images/5670939-d60aafc00cad9907.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
 
