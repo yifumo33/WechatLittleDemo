@@ -5,11 +5,11 @@
 - 使用Koa2构建小程序的后台。
 - 使用mysql作为后台数据的存储。
 ## 功能说明
-- 实现图书的isbn码扫码录入。
+### 实现图书的isbn码扫码录入。
 ![点击添加图书可以扫码录入图书](https://upload-images.jianshu.io/upload_images/5670939-4b35fd86992c4e5d.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-- 实现在线豆瓣书籍查询。
+### 实现在线豆瓣书籍查询。
 ![可以在线查询豆瓣资料](https://upload-images.jianshu.io/upload_images/5670939-9ac4b2f5fa544853.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
-- 实现图书的详情资料查询以及评论录入。
+### 实现图书的详情资料查询以及评论录入。
 ![图书页面详情展示](https://upload-images.jianshu.io/upload_images/5670939-caa8c6207990c377.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240)
 
 
